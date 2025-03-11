@@ -1,5 +1,4 @@
 #include <wups.h>
-#include <utils/logger.h>
 #include <gx2/surface.h>
 #include <utils/StringTools.h>
 #include <fs/FSUtils.h>
