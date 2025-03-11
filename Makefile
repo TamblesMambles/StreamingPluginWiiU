@@ -42,7 +42,7 @@ else
     include makefile.mk
 endif
 
-include $(WUPSDIR)/plugin_makefile.mk
+
 
 
 #MAP ?= $(TARGET:.mod=.map)
