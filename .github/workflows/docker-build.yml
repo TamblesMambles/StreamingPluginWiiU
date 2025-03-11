@@ -1,12 +1,9 @@
-name: Docker Build and Make
+name: StreamingPlugin Aroma Build and Make
 
 on:
   push:
     branches:
-      - main  # Change to your main branch
-  pull_request:
-    branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -34,7 +31,7 @@ jobs:
   clean:
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'workflow_dispatch'  # Only runs if manually triggered
+    if: github.event_name == 'workflow_dispatch' 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
