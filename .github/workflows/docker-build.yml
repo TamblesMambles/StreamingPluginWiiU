@@ -23,8 +23,8 @@ jobs:
           # Check if the expected output exists (spoiler it doesn't)
           if [ -d "output" ]; then
             cp -r output/* build_output/
-          elif [ -f "screenstreaming.mod" ]; then
-            cp screenstreaming.mod build_output/
+          elif [ -f "screenstreaming.wps" ]; then
+            cp screenstreaming.wps build_output/
           else
             echo "No output found, build may have failed."
             exit 1
@@ -33,6 +33,6 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-output
+          name: StreamingAromaPlugin
           path: build_output/
           retention-days: 7  # Adjust retention period
