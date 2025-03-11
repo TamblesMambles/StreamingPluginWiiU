@@ -21,7 +21,6 @@
 
 #include <coreinit/messagequeue.h>
 #include <coreinit/cache.h>
-#include <utils/logger.h>
 #include <system/CThread.h>
 #include <nsysnet/socket.h>
 #include "crc32.h"
