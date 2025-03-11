@@ -16,7 +16,7 @@ WUT_ENABLE_CPP      := 0
 WUT_DEFAULT_MALLOC  := 1
 
 # Target filename
-TARGET              := screenstreaming.mod
+TARGET              := screenstreaming.wps
 
 # Source directories
 SOURCES             := src/
