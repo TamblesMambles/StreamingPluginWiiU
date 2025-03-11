@@ -1,0 +1,53 @@
+name: Docker Build and Make
+
+on:
+  push:
+    branches:
+      - main  # Change to your main branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build . -t screenstreamer-builder
+
+      - name: Run make
+        run: |
+          mkdir -p build_output
+          docker run --rm -v ${{ github.workspace }}:/project screenstreamer-builder make
+          cp -r output/* build_output/  # Adjust if your build output is in a different directory
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenstreaming
+          path: build_output/
+          retention-days: 365  # Adjust retention period
+
+  clean:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'workflow_dispatch'  # Only runs if manually triggered
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: build_output/
+
+      - name: Build Docker Image (if not already cached)
+        run: docker build . -t screenstreamer-builder
+
+      - name: Run make clean
+        run: docker run --rm -v ${{ github.workspace }}:/project screenstreamer-builder make clean
+        
