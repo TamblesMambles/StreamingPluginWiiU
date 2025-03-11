@@ -12,7 +12,7 @@ endif
 ifeq ($(strip $(DEVKITPRO)),)
 $(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>devkitPRO")
 endif
-WUT_ROOT := $(DEVKITPRO)/wut
+export WUT_ROOT := $(DEVKITPRO)/wut
 export PATH		:=	$(DEVKITPPC)/bin:$(PORTLIBS)/bin:$(PATH)
 export PORTLIBS :=	$(DEVKITPRO)/portlibs/ppc
 export WUPSDIR  :=  $(DEVKITPRO)/wups
