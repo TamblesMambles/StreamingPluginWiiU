@@ -1,4 +1,4 @@
-name: StreamingPlugin Aroma Build and Make
+name: StreamingPlugin Build and Make
 
 on:
   push:
@@ -19,32 +19,20 @@ jobs:
         run: |
           mkdir -p build_output
           docker run --rm -v ${{ github.workspace }}:/project screenstreamer-builder make
-          cp -r output/* build_output/  # Adjust if your build output is in a different directory
+          
+          # Check if the expected output exists (spoiler it doesn't)
+          if [ -d "output" ]; then
+            cp -r output/* build_output/
+          elif [ -f "screenstreaming.mod" ]; then
+            cp screenstreaming.mod build_output/
+          else
+            echo "No output found, build may have failed."
+            exit 1
+          fi
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: screenstreaming
-          path: build_output/
-          retention-days: 365  # Adjust retention period
-
-  clean:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'workflow_dispatch' 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
-        with:
           name: build-output
           path: build_output/
-
-      - name: Build Docker Image (if not already cached)
-        run: docker build . -t screenstreamer-builder
-
-      - name: Run make clean
-        run: docker run --rm -v ${{ github.workspace }}:/project screenstreamer-builder make clean
-        
+          retention-days: 7  # Adjust retention period
