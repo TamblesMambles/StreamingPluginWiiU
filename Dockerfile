@@ -1,5 +1,5 @@
 FROM wups/core-with-wut:0.1
-
+FROM ghcr.io/wiiu-env/devkitppc:20241128 
 # Get dependencies
 COPY --from=wiiuwut/libutils:0.1 /artifacts $WUT_ROOT
 
